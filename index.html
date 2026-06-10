@@ -42,7 +42,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.05;
+            opacity: 0.3;
             z-index: 2;
             pointer-events: none;
         }
@@ -422,77 +422,132 @@
 
         function drawBackgroundDogs() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = 'rgba(255, 105, 180, 0.3)';
-            ctx.lineWidth = 1;
-
-            // 绘制多只小狗在背景
-            drawDog(150, 100, 1);
-            drawDog(canvas.width - 150, 200, 0.8);
-            drawDog(100, canvas.height - 200, 0.9);
-            drawDog(canvas.width - 200, canvas.height - 150, 1);
+            
+            // 绘制多个不同大小和位置的小狗
+            drawDogWithDetails(150, 100, 1.2, 0);
+            drawDogWithDetails(canvas.width - 180, 150, 0.9, 15);
+            drawDogWithDetails(120, canvas.height - 180, 1, 30);
+            drawDogWithDetails(canvas.width - 120, canvas.height - 150, 1.1, -20);
+            drawDogWithDetails(canvas.width * 0.5, 80, 0.85, 10);
         }
 
-        function drawDog(x, y, scale) {
-            const s = scale;
+        function drawDogWithDetails(x, y, scale, rotation) {
             ctx.save();
             ctx.translate(x, y);
-            ctx.scale(s, s);
+            ctx.rotate((rotation * Math.PI) / 180);
+            ctx.scale(scale, scale);
 
-            // 小狗头部
+            ctx.strokeStyle = 'rgba(255, 105, 180, 0.6)';
+            ctx.fillStyle = 'rgba(255, 105, 180, 0.15)';
+            ctx.lineWidth = 1.5;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            // 头部
             ctx.beginPath();
-            ctx.arc(0, 0, 20, 0, Math.PI * 2);
+            ctx.arc(0, 0, 22, 0, Math.PI * 2);
             ctx.stroke();
+            ctx.fill();
 
             // 左耳
             ctx.beginPath();
-            ctx.ellipse(-12, -18, 6, 12, 0, 0, Math.PI * 2);
+            ctx.ellipse(-14, -20, 7, 14, -0.3, 0, Math.PI * 2);
             ctx.stroke();
+            ctx.fill();
 
             // 右耳
             ctx.beginPath();
-            ctx.ellipse(12, -18, 6, 12, 0, 0, Math.PI * 2);
+            ctx.ellipse(14, -20, 7, 14, 0.3, 0, Math.PI * 2);
             ctx.stroke();
+            ctx.fill();
 
-            // 眼睛
+            // 左眼
             ctx.beginPath();
-            ctx.arc(-8, -3, 2, 0, Math.PI * 2);
+            ctx.arc(-8, -5, 2.5, 0, Math.PI * 2);
             ctx.stroke();
+            ctx.fillStyle = 'rgba(255, 105, 180, 0.8)';
+            ctx.fill();
+            ctx.fillStyle = 'rgba(255, 105, 180, 0.15)';
+
+            // 右眼
             ctx.beginPath();
-            ctx.arc(8, -3, 2, 0, Math.PI * 2);
+            ctx.arc(8, -5, 2.5, 0, Math.PI * 2);
             ctx.stroke();
+            ctx.fillStyle = 'rgba(255, 105, 180, 0.8)';
+            ctx.fill();
+            ctx.fillStyle = 'rgba(255, 105, 180, 0.15)';
 
             // 鼻子
+            ctx.strokeStyle = 'rgba(255, 105, 180, 0.6)';
             ctx.beginPath();
-            ctx.arc(0, 5, 2.5, 0, Math.PI * 2);
+            ctx.arc(0, 5, 3, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fill();
+
+            // 嘴巴
+            ctx.beginPath();
+            ctx.arc(-4, 12, 3, 0.2, Math.PI - 0.2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(4, 12, 3, Math.PI + 0.2, Math.PI * 2 - 0.2);
             ctx.stroke();
 
-            // 嘴
+            // 舌头
             ctx.beginPath();
-            ctx.arc(-5, 10, 3, 0.2, Math.PI - 0.2);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.arc(5, 10, 3, Math.PI + 0.2, Math.PI * 2 - 0.2);
-            ctx.stroke();
+            ctx.ellipse(0, 18, 2, 3, 0, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 192, 203, 0.4)';
+            ctx.fill();
 
             // 身体
+            ctx.strokeStyle = 'rgba(255, 105, 180, 0.6)';
             ctx.beginPath();
-            ctx.rect(-15, 18, 30, 18);
+            ctx.rect(-16, 22, 32, 22);
             ctx.stroke();
+            ctx.fill();
 
             // 前腿
+            ctx.strokeStyle = 'rgba(255, 105, 180, 0.6)';
+            ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.moveTo(-10, 36);
-            ctx.lineTo(-10, 45);
+            ctx.moveTo(-10, 44);
+            ctx.lineTo(-10, 54);
             ctx.stroke();
             ctx.beginPath();
-            ctx.moveTo(10, 36);
-            ctx.lineTo(10, 45);
+            ctx.moveTo(10, 44);
+            ctx.lineTo(10, 54);
+            ctx.stroke();
+
+            // 后腿
+            ctx.beginPath();
+            ctx.moveTo(-14, 44);
+            ctx.lineTo(-14, 52);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(14, 44);
+            ctx.lineTo(14, 52);
             ctx.stroke();
 
             // 尾巴
+            ctx.strokeStyle = 'rgba(255, 105, 180, 0.6)';
+            ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.quadraticCurveTo(20, 28, 25, 15);
+            ctx.quadraticCurveTo(22, 30, 28, 15);
             ctx.stroke();
+
+            // 爪子
+            ctx.fillStyle = 'rgba(255, 105, 180, 0.3)';
+            ctx.beginPath();
+            ctx.ellipse(-10, 55, 3, 4, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(10, 55, 3, 4, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(-14, 52, 2.5, 3.5, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(14, 52, 2.5, 3.5, 0, 0, Math.PI * 2);
+            ctx.fill();
 
             ctx.restore();
         }
@@ -587,36 +642,40 @@
 
         // 播放生日快乐音乐
         function playMusic() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const now = audioContext.currentTime;
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const now = audioContext.currentTime;
 
-            // 生日快乐歌的简化版本
-            const notes = [
-                { freq: 262, time: 0, duration: 0.3 },
-                { freq: 262, time: 0.4, duration: 0.3 },
-                { freq: 294, time: 0.8, duration: 0.6 },
-                { freq: 262, time: 1.6, duration: 0.6 },
-                { freq: 330, time: 2.4, duration: 0.6 },
-                { freq: 392, time: 3.2, duration: 1.2 },
-                { freq: 392, time: 4.6, duration: 0.3 },
-                { freq: 392, time: 5.0, duration: 0.3 },
-                { freq: 392, time: 5.4, duration: 0.6 },
-                { freq: 349, time: 6.2, duration: 0.6 },
-                { freq: 330, time: 7.0, duration: 0.6 },
-                { freq: 294, time: 7.8, duration: 1.2 },
-            ];
+                // 生日快乐歌的简化版本
+                const notes = [
+                    { freq: 262, time: 0, duration: 0.3 },
+                    { freq: 262, time: 0.4, duration: 0.3 },
+                    { freq: 294, time: 0.8, duration: 0.6 },
+                    { freq: 262, time: 1.6, duration: 0.6 },
+                    { freq: 330, time: 2.4, duration: 0.6 },
+                    { freq: 392, time: 3.2, duration: 1.2 },
+                    { freq: 392, time: 4.6, duration: 0.3 },
+                    { freq: 392, time: 5.0, duration: 0.3 },
+                    { freq: 392, time: 5.4, duration: 0.6 },
+                    { freq: 349, time: 6.2, duration: 0.6 },
+                    { freq: 330, time: 7.0, duration: 0.6 },
+                    { freq: 294, time: 7.8, duration: 1.2 },
+                ];
 
-            notes.forEach(note => {
-                const osc = audioContext.createOscillator();
-                const gain = audioContext.createGain();
-                osc.connect(gain);
-                gain.connect(audioContext.destination);
-                osc.frequency.value = note.freq;
-                gain.gain.setValueAtTime(0.15, now + note.time);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + note.time + note.duration);
-                osc.start(now + note.time);
-                osc.stop(now + note.time + note.duration);
-            });
+                notes.forEach(note => {
+                    const osc = audioContext.createOscillator();
+                    const gain = audioContext.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioContext.destination);
+                    osc.frequency.value = note.freq;
+                    gain.gain.setValueAtTime(0.15, now + note.time);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + note.time + note.duration);
+                    osc.start(now + note.time);
+                    osc.stop(now + note.time + note.duration);
+                });
+            } catch (e) {
+                console.log('Audio context not available');
+            }
         }
 
         // 音乐按钮控制
