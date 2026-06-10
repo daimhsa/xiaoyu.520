@@ -18,16 +18,21 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            background: linear-gradient(135deg, #ffe6f0 0%, #fff0f6 50%, #ffe0eb 100%);
+            /* 替换为 bj.jpg 背景图 */
+            background: url("bj.jpg") no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
         }
 
-        canvas {
+        /* 半透明遮罩，让文字更清晰 */
+        body::after {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.2;
+            background: rgba(255, 230, 240, 0.6);
             z-index: 1;
             pointer-events: none;
         }
@@ -312,7 +317,7 @@
     </style>
 </head>
 <body>
-    <canvas id="bgCanvas"></canvas>
+    <!-- 移除原有 Canvas 背景 -->
 
     <div class="container">
         <h1 class="title">🎂 生日快乐 🎂</h1>
@@ -373,86 +378,6 @@
     <button class="music-toggle" id="musicToggle" title="点击播放音乐">🎵</button>
 
     <script>
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            drawBackgroundDogs();
-        }
-
-        function drawBackgroundDogs() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = 'rgba(255, 105, 180, 0.5)';
-            ctx.fillStyle = 'rgba(255, 105, 180, 0.1)';
-            ctx.lineWidth = 1;
-
-            drawDog(150, 100, 1);
-            drawDog(canvas.width - 150, 200, 0.8);
-            drawDog(100, canvas.height - 200, 0.9);
-            drawDog(canvas.width - 200, canvas.height - 150, 1);
-        }
-
-        function drawDog(x, y, scale) {
-            const s = scale;
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.scale(s, s);
-
-            ctx.beginPath();
-            ctx.arc(0, 0, 20, 0, Math.PI * 2);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.ellipse(-12, -18, 6, 12, 0, 0, Math.PI * 2);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.ellipse(12, -18, 6, 12, 0, 0, Math.PI * 2);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.arc(-8, -3, 2, 0, Math.PI * 2);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.arc(8, -3, 2, 0, Math.PI * 2);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.arc(0, 5, 2.5, 0, Math.PI * 2);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.arc(-5, 10, 3, 0.2, Math.PI - 0.2);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.arc(5, 10, 3, Math.PI + 0.2, Math.PI * 2 - 0.2);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.rect(-15, 18, 30, 18);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.moveTo(-10, 36);
-            ctx.lineTo(-10, 45);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(10, 36);
-            ctx.lineTo(10, 45);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.quadraticCurveTo(20, 28, 25, 15);
-            ctx.stroke();
-
-            ctx.restore();
-        }
-
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
         const giftBtn = document.getElementById('giftBtn');
         const popup = document.getElementById('popup');
 
